@@ -15,6 +15,7 @@ dependencies = [
     "scikit-learn==1.9.0",
     "bezier",
     "bioio-lif>=2.0.1",
+    "bioio-tifffile>=1.3.1",
 ]
 
 [tool.uv.sources]
