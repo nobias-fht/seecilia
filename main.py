@@ -89,7 +89,7 @@ class PipelineWidget(QtWidgets.QWidget):
 
         self.min_seg_size = QtWidgets.QSpinBox()
         self.min_seg_size.setRange(0, 10**9)
-        self.min_seg_size.setValue(50)
+        self.min_seg_size.setValue(200)
 
         self.max_cilia_length = QtWidgets.QSpinBox()
         self.max_cilia_length.setRange(0, 10**9)
@@ -119,11 +119,11 @@ class PipelineWidget(QtWidgets.QWidget):
 
         self.sliding_window = QtWidgets.QSpinBox()
         self.sliding_window.setRange(1, 10)
-        self.sliding_window.setValue(5)
+        self.sliding_window.setValue(7)
 
         self.savgol_polyorder = QtWidgets.QSpinBox()
         self.savgol_polyorder.setRange(0, 6)
-        self.savgol_polyorder.setValue(2)
+        self.savgol_polyorder.setValue(1)
 
         self.use_classifier_checkbox = QtWidgets.QCheckBox()
         self.use_classifier_checkbox.setChecked(True)
