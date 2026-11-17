@@ -125,6 +125,10 @@ class PipelineWidget(QtWidgets.QWidget):
         self.savgol_polyorder.setRange(0, 6)
         self.savgol_polyorder.setValue(2)
 
+        self.use_classifier = QtWidgets.QCheckBox()
+        self.use_classifier.setChecked(True)
+
+        numeric_layout.addRow("Use classifier", self.use_classifier)
         numeric_layout.addRow("Cilia channel", self.cilia_channel)
         numeric_layout.addRow("Binary threshold", self.binary_threshold)
         numeric_layout.addRow("Min segmentation size", self.min_seg_size)
@@ -339,12 +343,16 @@ class PipelineWidget(QtWidgets.QWidget):
 
         labs = skimage.measure.label(labs_clean)
         #self.viewer.add_labels(labs, name="cleaned_masks")
-        result = classify_image(cilia_im, labs, self.classifier_path.text())
-        result_temp = np.copy(result)
-        self.viewer.add_labels(result_temp, name="classified")
+        if self.use_classifier.isChecked():
+            result = classify_image(cilia_im, labs, self.classifier_path.text())
+            result_temp = np.copy(result)
+            self.viewer.add_labels(result_temp, name="classified")
 
-        result[result == 1] = 0
-        simple_masks_thresholded = labs * result
+            result[result == 1] = 0
+            simple_masks_thresholded = labs * result
+        else:
+            # without the classifier, all filtered masks are kept
+            simple_masks_thresholded = labs
         self.viewer.add_labels(simple_masks_thresholded, name="final_masks")
 
 
