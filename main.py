@@ -125,10 +125,10 @@ class PipelineWidget(QtWidgets.QWidget):
         self.savgol_polyorder.setRange(0, 6)
         self.savgol_polyorder.setValue(2)
 
-        self.use_classifier = QtWidgets.QCheckBox()
-        self.use_classifier.setChecked(True)
+        self.use_classifier_checkbox = QtWidgets.QCheckBox()
+        self.use_classifier_checkbox.setChecked(True)
 
-        numeric_layout.addRow("Use classifier", self.use_classifier)
+        numeric_layout.addRow("Use classifier", self.use_classifier_checkbox)
         numeric_layout.addRow("Cilia channel", self.cilia_channel)
         numeric_layout.addRow("Binary threshold", self.binary_threshold)
         numeric_layout.addRow("Min segmentation size", self.min_seg_size)
@@ -311,6 +311,7 @@ class PipelineWidget(QtWidgets.QWidget):
         min_segmentation_size = self.min_seg_size.value()
         max_circularity = self.max_circularity.value()
         max_axis_ratio = self.max_axis_ratio.value()
+        use_classifier = self.use_classifier_checkbox.isChecked()
         elem_3D = skimage.morphology.footprint_rectangle((3,3,3))
         elem_2D = skimage.morphology.footprint_rectangle((3,3))
         
@@ -343,7 +344,7 @@ class PipelineWidget(QtWidgets.QWidget):
 
         labs = skimage.measure.label(labs_clean)
         #self.viewer.add_labels(labs, name="cleaned_masks")
-        if self.use_classifier.isChecked():
+        if use_classifier:
             result = classify_image(cilia_im, labs, self.classifier_path.text())
             result_temp = np.copy(result)
             self.viewer.add_labels(result_temp, name="classified")
