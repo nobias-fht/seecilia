@@ -383,7 +383,7 @@ class PipelineWidget(QtWidgets.QWidget):
             label = prop.label
             cube_raw = extract_cube_padded(cilia_im, prop.bbox, prop.label, padding=0)
             cube = extract_cube_padded(simple_masks, prop.bbox, prop.label, padding=0)
-            centerline_coords, length = extract_centerline_anisotropic(cube, power=2.0)
+            centerline_coords, length = extract_centerline_anisotropic(cube, power=3.0)
             center_mask = create_centerline_mask(cube, centerline_coords)
             if np.count_nonzero(center_mask) < 3:
                 continue
