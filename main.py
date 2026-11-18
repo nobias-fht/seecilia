@@ -358,7 +358,10 @@ class PipelineWidget(QtWidgets.QWidget):
 
 
     def run_quantification(self, imname=None, batchmode=False):
-
+        impath_temp = self.image_path.text().strip()
+        
+        imname = impath_temp.split('/')[-1]
+        print(imname)
         scale_Z = self.scale_z.value()
         scale_XY = self.scale_xy.value()
         scale = (scale_Z, scale_XY, scale_XY)
@@ -444,7 +447,7 @@ class PipelineWidget(QtWidgets.QWidget):
             skimage.io.imsave(os.path.join(save_path, 'final_masks.tif'), self.viewer.layers['final_masks'].data.astype(np.uint16), check_contrast=False)
             plot.savefig(os.path.join(save_path, 'quantification_plot.png'))
         else:
-            save_path = os.path.join(self.output_path.text().strip(), extract_filename(imname))
+            save_path = os.path.join(self.output_path.text().strip(), imname)
             os.makedirs(save_path, exist_ok=True)
             df.to_csv(os.path.join(save_path, 'quantification.csv'), index=False)
             skimage.io.imsave(os.path.join(save_path, 'skeletons.tif'), self.viewer.layers['skeletons'].data.astype(np.uint16), check_contrast=False)
