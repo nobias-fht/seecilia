@@ -451,8 +451,8 @@ class PipelineWidget(QtWidgets.QWidget):
             skimage.io.imsave(os.path.join(save_path, 'final_masks.tif'), self.viewer.layers['final_masks'].data.astype(np.uint16), check_contrast=False)
             plot.savefig(os.path.join(save_path, 'quantification_plot.png'))
         
-        if not batchmode:
-            plot.show()
+        # if not batchmode:
+        #     plot.show()
 
         all_sampled_points = np.vstack(sampled_coords_pixel_list) if sampled_coords_pixel_list else np.empty((0, 3))
         self.viewer.add_points(all_sampled_points, name='sampled_coords_pixel', size=2, face_color='cyan')
